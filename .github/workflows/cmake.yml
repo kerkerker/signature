@@ -45,4 +45,8 @@ jobs:
       run: |
         mv ${{github.workspace}}/tests/files/* tests/
         ctest -C ${{env.BUILD_TYPE}}
+
+    - name: Code coverage using Codecov
+      working-directory: ${{github.workspace}}/build
+      run: bash <(curl -s https://codecov.io/bash)
       
