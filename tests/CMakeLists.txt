@@ -8,8 +8,8 @@ target_link_libraries(test_signature
 #target_compile_options(test_signature PRIVATE -fsanitize=address -fno-omit-frame-pointer -fsanitize-recover=address)
 #target_link_options(test_signature PRIVATE -fsanitize=address)
 
-target_compile_options(test_signature PRIVATE -fsanitize=thread)
-target_link_options(test_signature PRIVATE -fsanitize=thread)
+#target_compile_options(test_signature PRIVATE -fsanitize=thread)
+#target_link_options(test_signature PRIVATE -fsanitize=thread)
 
 target_compile_options(test_signature PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
 target_link_options(test_signature PUBLIC -fprofile-arcs -ftest-coverage)
