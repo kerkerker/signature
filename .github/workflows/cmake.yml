@@ -47,6 +47,7 @@ jobs:
         ctest -C ${{env.BUILD_TYPE}}
 
     - name: Upload
+      working-directory: ${{github.workspace}}/build
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
