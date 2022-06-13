@@ -7,6 +7,7 @@
 #include <boost/lockfree/queue.hpp>
 #include <openssl/sha.h>
 
+#include <cstring>
 #include <iostream>
 
 namespace fs = std::filesystem;
@@ -15,16 +16,6 @@ std::unique_ptr<char[]> Sha1Hasher::hash(std::unique_ptr<char[]> block, size_t s
 {
   auto hash_block = std::make_unique_for_overwrite<char[]>(kDigestSize);
   SHA1(reinterpret_cast<unsigned char*>(block.get()), size, reinterpret_cast<unsigned char*>(hash_block.get()));
-
-  //  boost::uuids::detail::sha1 sha1_;
-  //  sha1_.process_bytes(block.get(), size);
-  //  thread_local boost::uuids::detail::sha1::digest_type digest;
-  //  sha1_.get_digest(digest);
-  //
-  //  auto hash_block = std::make_unique_for_overwrite<char[]>(kDigestSize);
-  //  std::memcpy(hash_block.get(), digest, kDigestSize);
-
-  //  sha1_.reset();
 
   return hash_block;
 }
