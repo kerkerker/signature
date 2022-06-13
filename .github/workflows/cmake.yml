@@ -25,6 +25,9 @@ jobs:
         sudo add-apt-repository ppa:mhier/libboost-latest
         sudo apt-get update
         sudo apt-get install -y libboost-all-dev libgtest-dev gcc-11 g++-11
+        update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
+        update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
+
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
