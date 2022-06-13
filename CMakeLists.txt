@@ -62,5 +62,6 @@ if (with-msan AND NOT with-tsan AND NOT with-asan AND NOT with-lsan)
 endif ()
 
 if (with-tests)
+    enable_testing()
     add_subdirectory(tests)
 endif ()

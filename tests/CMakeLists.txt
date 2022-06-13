@@ -11,6 +11,5 @@ target_link_libraries(test_signature
 target_compile_options(test_signature PRIVATE -fsanitize=thread)
 target_link_options(test_signature PRIVATE -fsanitize=thread)
 
-enable_testing()
 gtest_discover_tests(test_signature
         XML_OUTPUT_DIR report)
