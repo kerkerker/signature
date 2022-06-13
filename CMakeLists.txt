@@ -21,7 +21,7 @@ set(BINARY_NAME signature)
 
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(Boost 1.74.0 REQUIRED COMPONENTS program_options thread)
+find_package(Boost 1.71.0 REQUIRED COMPONENTS program_options thread)
 find_package (OpenSSL REQUIRED COMPONENTS Crypto)
 
 set(SOURCE_FILES src/main.cpp src/Reader.cpp src/Writer.cpp src/Calculator.cpp src/Signature.cpp)

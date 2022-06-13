@@ -41,6 +41,6 @@ void Calculator::run(size_t block_size)
         });
   }
 
-  thread_pool.wait();
+  thread_pool.join();
   writer_queue_.push({nullptr, 0});
 }
