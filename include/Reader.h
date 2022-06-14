@@ -14,6 +14,7 @@ public:
 
 private:
   void readFile(std::filesystem::path const& input_file, size_t block_size);
+  void readFileImpl(std::filesystem::path const& input_file, size_t block_size);
 
   IReaderQueue&     queue_;
   IExceptionsQueue& exceptions_queue_;

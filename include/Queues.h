@@ -1,18 +1,10 @@
 #pragma once
 
+#include "BlockInfo.h"
+
 #include <cstdint>
 #include <memory>
 #include <utility>
-
-// using FileBlockPointer = std::pair<uint8_t *, std::size_t>; // pointer to file block, block index
-
-struct FileBlockInfo
-{
-  std::unique_ptr<char[]> block;
-  size_t                  index;
-
-  bool isEmpty() const { return block == nullptr; } // TODO:? another stopper for queue
-};
 
 class IReaderQueue
 {
@@ -35,14 +27,6 @@ public:
 };
 
 using IExceptionsQueue = IQueue<std::exception_ptr>;
-
-struct HashBlockInfo
-{
-  std::unique_ptr<char[]> hash;
-  size_t                  index;
-
-  bool isEmpty() const { return hash == nullptr; } // TODO
-};
 
 class IWriterQueue
 {

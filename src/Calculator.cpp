@@ -24,7 +24,7 @@ void Calculator::run(size_t block_size)
   auto core_number = std::thread::hardware_concurrency() * 2; // TODO: hyperthreading? win/linux native functions
   asio::thread_pool thread_pool{core_number};
 
-  for (auto block_info = reader_queue_.pop(); !block_info.isEmpty(); block_info = reader_queue_.pop()) {
+  for (auto block_info = reader_queue_.pop(); !block_info.isStopper(); block_info = reader_queue_.pop()) {
     asio::post(
         thread_pool,
         [&hasher       = hasher_,
@@ -42,5 +42,5 @@ void Calculator::run(size_t block_size)
   }
 
   thread_pool.join();
-  writer_queue_.push({nullptr, 0});
+  writer_queue_.push(HashBlockInfo::Stopper());
 }

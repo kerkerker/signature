@@ -14,8 +14,9 @@ public:
   void join();
 
 private:
-  void readToBuffer(std::filesystem::path const& output_file, size_t number_of_blocks, size_t hash_size);
-  void readToFile(std::filesystem::path const& output_file, size_t number_of_blocks, size_t hash_size);
+  void write(std::filesystem::path const& output_file, size_t number_of_blocks, size_t hash_size);
+  void writeToBuffer(std::filesystem::path const& output_file, size_t number_of_blocks, size_t hash_size);
+  void writeToFile(std::filesystem::path const& output_file, size_t number_of_blocks, size_t hash_size);
 
   IWriterQueue&     queue_;
   IExceptionsQueue& exception_queue_;
