@@ -1,4 +1,4 @@
-name: CMake
+name: Windows
 
 on:
   workflow_dispatch:
@@ -24,9 +24,10 @@ jobs:
       - name: run-vcpkg
         uses: lukka/run-vcpkg@v10.2
         with:
-          setupOnly: false
+          vcpkgGitCommitId: '14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44'
+          setupOnly: true
 
-      - name:
+      - name: cmake
         uses: lukka/run-cmake@v3
 
       - name: Install dependencies
