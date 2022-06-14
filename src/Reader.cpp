@@ -1,8 +1,9 @@
 #include "Reader.h"
 
+#include <spdlog/spdlog.h>
+
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <memory>
 
 std::pair<size_t, size_t> get_file_blocks_info(std::filesystem::path const& input_file, size_t block_size)
@@ -41,7 +42,8 @@ void Reader::readFile(std::filesystem::path input_file, size_t block_size)
 {
   try {
     auto [number_of_blocks, last_block_size] = get_file_blocks_info(input_file, block_size);
-    std::cout << "number_of_blocks: " << number_of_blocks << std::endl;
+
+    spdlog::trace("number of blocks: {}, last block size: {}", number_of_blocks, last_block_size);
 
     std::ifstream ifs{input_file, std::ifstream::binary};
 
@@ -56,6 +58,8 @@ void Reader::readFile(std::filesystem::path input_file, size_t block_size)
         std::fill_n(block.get() + cur_block_size, block_size - cur_block_size, 0);
       }
 
+      spdlog::debug("[{}/{}] block read", i, number_of_blocks);
+
       queue_.push({std::move(block), i});
     }
 
@@ -65,9 +69,13 @@ void Reader::readFile(std::filesystem::path input_file, size_t block_size)
 
     queue_.push({nullptr, 0});
 
-    std::cout << "number_of_blocks: " << number_of_blocks << " last block size: " << last_block_size << std::endl;
-  } catch (std::exception const&) {
+  } catch (std::bad_alloc const& ex) {
+    spdlog::error("{}, try a smaller block size (current is {})", ex.what(), block_size);
     exceptions_queue_.push(std::current_exception());
-    //queue_.push({nullptr, 0});
+    queue_.push({nullptr, 0});
+  } catch (std::exception const& ex) {
+    spdlog::error(ex.what());
+    exceptions_queue_.push(std::current_exception());
+    queue_.push({nullptr, 0});
   }
 }

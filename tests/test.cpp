@@ -67,11 +67,11 @@ std::string read_crc32_signature(fs::path const& file)
 TEST(Signature, EmptyFileSha1)
 {
   auto output = fs::path{"empty_signature.bin"};
-  {
-    FileSignatureGenerator signature_generator{HashAlgorithm::kSha1};
 
-    signature_generator.run("empty.bin", output, 64);
-  }
+  FileSignatureGenerator signature_generator{HashAlgorithm::kSha1};
+
+  signature_generator.run("empty.bin", output, 64);
+
   auto signature = read_signature(output);
   ASSERT_EQ(signature, "c8d7d0ef0eedfa82d2ea1aa592845b9a6d4b02b7");
 }

@@ -10,8 +10,6 @@
 #include <cstring>
 #include <iostream>
 
-namespace fs = std::filesystem;
-
 std::unique_ptr<char[]> Sha1Hasher::hash(std::unique_ptr<char[]> block, size_t size) const
 {
   auto hash_block = std::make_unique_for_overwrite<char[]>(kDigestSize);

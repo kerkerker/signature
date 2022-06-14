@@ -80,7 +80,7 @@ IncludeCategories:
   - Regex: '^<[a-z_]+.h>'
     Priority: 5
   # Headers in <> from specific external libraries.
-  - Regex: '<((gmock|gtest|boost|openssl)\/)\.h'
+  - Regex: '<((gmock|gtest|boost|openssl|spdlog)\/)\.h'
     Priority: 4
   # Headers in <> with extension.
   - Regex:           '<([A-Za-z0-9.\Q/-_\E])+>'

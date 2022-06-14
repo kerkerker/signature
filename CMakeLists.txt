@@ -23,12 +23,13 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(Boost 1.71.0 REQUIRED COMPONENTS program_options thread)
 find_package (OpenSSL REQUIRED COMPONENTS Crypto)
+find_package(spdlog REQUIRED)
 
 set(SOURCE_FILES src/main.cpp src/Reader.cpp src/Writer.cpp src/Calculator.cpp src/Signature.cpp)
 
 add_executable(${BINARY_NAME} ${SOURCE_FILES})
 target_include_directories(${BINARY_NAME} PUBLIC ${Boost_INCLUDE_DIRS} include)
-target_link_libraries(${BINARY_NAME} Boost::program_options Boost::thread OpenSSL::Crypto)
+target_link_libraries(${BINARY_NAME} Boost::program_options Boost::thread OpenSSL::Crypto spdlog::spdlog)
 #target_link_libraries(signature Boost::program_options Boost::thread ${Boost_SYSTEM_LIBRARY}
 #        ${Boost_SERIALIZATION_LIBRARY} Boost::boost)
 
