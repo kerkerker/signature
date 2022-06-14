@@ -24,7 +24,7 @@ jobs:
       - name: run-vcpkg
         uses: lukka/run-vcpkg@v10
         with:
-          setupOnly: true
+          setupOnly: false
 
       - name:
         uses: lukka/run-cmake@v3
