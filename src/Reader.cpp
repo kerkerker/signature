@@ -83,7 +83,7 @@ void Reader::readFileImpl(std::filesystem::path const& input_file, size_t block_
   for (size_t i = 0; i < number_of_blocks; ++i) {
     auto block = try_alloc_buffer(block_size);
 
-    auto cur_block_size = i == number_of_blocks - 1 && i != 0 ? block_size : last_block_size;
+    auto cur_block_size = (i != number_of_blocks - 1) ? block_size : last_block_size;
     ifs.read(block.get(), static_cast<std::streamsize>(cur_block_size));
 
     if (cur_block_size < block_size) {

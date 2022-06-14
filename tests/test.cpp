@@ -166,3 +166,12 @@ TEST(Signature, NonExistingOutputDir)
       },
       std::ios_base::failure);
 }
+
+TEST(Signature, Crc32)
+{
+  FileSignatureGenerator signature_generator{HashAlgorithm::kSha1};
+  auto                   output = fs::path{"abc_sig.bin"};
+  signature_generator.run("abc.txt", output, 2);
+  auto signature = read_signature(output);
+  ASSERT_EQ(signature, "da23614e02469a0d7c7bd1bdab5c9c474b1904dc5b9fe05484b470b354696b4f06c3b12f71b5bb4a");
+}
