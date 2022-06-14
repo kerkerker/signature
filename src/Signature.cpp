@@ -2,23 +2,28 @@
 
 #include "Calculator.h"
 #include "Reader.h"
-#include "Writer.h"
 
-#include <boost/lockfree/queue.hpp>
 #include <openssl/sha.h>
 
 #include <cstring>
 #include <iostream>
 
-std::unique_ptr<char[]> Sha1Hasher::hash(std::unique_ptr<char[]> block, size_t size) const
+static std::unique_ptr<IHasher> get_hasher(HashAlgorithm algorithm)
 {
-  auto hash_block = std::make_unique_for_overwrite<char[]>(kDigestSize);
-  SHA1(reinterpret_cast<unsigned char*>(block.get()), size, reinterpret_cast<unsigned char*>(hash_block.get()));
+  switch (algorithm) {
+    case HashAlgorithm::kSha1: return std::make_unique<Sha1Hasher>();
+    case HashAlgorithm::kCrc32: return std::make_unique<Crc32Hasher>();
+  }
 
-  return hash_block;
+  throw std::invalid_argument("Unknown hash algorithm");
 }
 
-size_t Sha1Hasher::size() const { return kDigestSize; }
+FileSignatureGenerator::FileSignatureGenerator(HashAlgorithm algorithm)
+    : hasher_{get_hasher(algorithm)},
+      reader_{reader_queue_, exceptions_queue_},
+      calculator_{reader_queue_, writer_queue_, exceptions_queue_, *hasher_},
+      writer_{writer_queue_, exceptions_queue_}
+{}
 
 void FileSignatureGenerator::run(
     const std::filesystem::path& input_file,
@@ -37,12 +42,15 @@ void FileSignatureGenerator::run(
   }
 }
 
-FileSignatureGenerator::FileSignatureGenerator(HashAlgorithm algorithm)
-    : hasher_{get_hasher(algorithm)},
-      reader_{reader_queue_, exceptions_queue_},
-      calculator_{reader_queue_, writer_queue_, exceptions_queue_, *hasher_},
-      writer_{writer_queue_, exceptions_queue_}
-{}
+std::unique_ptr<char[]> Sha1Hasher::hash(std::unique_ptr<char[]> block, size_t size) const
+{
+  auto hash_block = std::make_unique_for_overwrite<char[]>(kDigestSize);
+  SHA1(reinterpret_cast<unsigned char*>(block.get()), size, reinterpret_cast<unsigned char*>(hash_block.get()));
+
+  return hash_block;
+}
+
+size_t Sha1Hasher::size() const { return kDigestSize; }
 
 std::unique_ptr<char[]> Crc32Hasher::hash(std::unique_ptr<char[]> block, size_t size) const
 {
@@ -53,7 +61,6 @@ std::unique_ptr<char[]> Crc32Hasher::hash(std::unique_ptr<char[]> block, size_t 
   uint32_t checksum   = result.checksum();
   std::memcpy(hash_block.get(), &checksum, sizeof(checksum));
 
-  //  *reinterpret_cast<uint32_t*>(hash_block.get()) = checksum;
   return hash_block;
 }
 

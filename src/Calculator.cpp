@@ -32,12 +32,12 @@ void Calculator::run(size_t block_size)
          block_info    = std::move(block_info),
          block_size,
          &exception_queue = exception_queue_]() mutable {
-         // try {
+          try {
             auto hash_block = hasher.hash(std::move(block_info.block), block_size);
             writer_queue.push({std::move(hash_block), block_info.index});
-//          } catch (std::exception const&) {
-//            exception_queue.push(std::current_exception());
-//          }
+          } catch (std::exception const&) {
+            exception_queue.push(std::current_exception());
+          }
         });
   }
 

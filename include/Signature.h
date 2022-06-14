@@ -69,16 +69,6 @@ enum class HashAlgorithm
   kCrc32
 };
 
-inline std::unique_ptr<IHasher> get_hasher(HashAlgorithm algorithm)
-{
-  switch (algorithm) {
-    case HashAlgorithm::kSha1: return std::make_unique<Sha1Hasher>();
-    case HashAlgorithm::kCrc32: return std::make_unique<Crc32Hasher>();
-  }
-
-  throw std::invalid_argument("Unknown hash algorithm");
-}
-
 class FileSignatureGenerator
 {
 public:
