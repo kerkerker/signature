@@ -55,17 +55,3 @@ jobs:
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-
-    - name: Pack
-      shell: bash
-      working-directory: instdir
-      run: |
-        ls -laR
-        ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .
-
-    - name: Upload package
-      uses: actions/upload-artifact@v1
-      with:
-        path: ./${{ matrix.config.artifact }}
-        name: ${{ matrix.config.artifact }}
-      
