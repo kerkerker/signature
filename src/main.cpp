@@ -71,7 +71,7 @@ int main(int argc, const char* argv[])
   po::variables_map vm;
   try {
     po::store(parse_command_line(argc, argv, opt_desc), vm);
-    if (vm.contains("help"))
+    if (vm.count("help") > 0)
     {
       std::cout << opt_desc << "\n";
       return 1;
@@ -85,7 +85,7 @@ int main(int argc, const char* argv[])
   set_log_level(vm["log"].as<std::string>());
 
 #ifdef __linux__
-  if (vm.count("memlimit") > 0) {
+  if (vm.contains("memlimit")) {
     rlimit rlim_memory{};
     getrlimit(RLIMIT_FSIZE, &rlim_memory);
     rlim_memory.rlim_cur = vm["memlimit"].as<rlim_t>();
