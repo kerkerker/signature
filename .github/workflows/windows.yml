@@ -29,20 +29,14 @@ jobs:
         with:
           vcpkgGitCommitId: '14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44'
           runVcpkgInstall: true
+          vcpkgJsonGlob: vcpkg.json
 
-#      - name: Install dependencies
-#        run: |
-#          vcpkg install openssl
-#          vcpkg install spdlog
-#          vcpkg install gtest
-#          vcpkg install boost-program-options boost-thread boost-asio boost-compute
-
-      - name: Run CMake+vcpkg+Ninja+CTest to generate/build/
-        uses: lukka/run-cmake@v10
-        id: runcmake
-        with:
-          configurePreset: 'ninja-multi-vcpkg'
-          buildPreset: 'ninja-multi-vcpkg-debug'
+#      - name: Run CMake+vcpkg+Ninja+CTest to generate/build/
+#        uses: lukka/run-cmake@v10
+#        id: runcmake
+#        with:
+#          configurePreset: 'ninja-multi-vcpkg'
+#          buildPreset: 'ninja-multi-vcpkg-debug'
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.

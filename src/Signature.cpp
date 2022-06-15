@@ -4,6 +4,7 @@
 #include "Reader.h"
 
 #include <openssl/sha.h>
+#include <spdlog/spdlog.h>
 
 #include <cstring>
 
@@ -35,8 +36,12 @@ void FileSignatureGenerator::run(
   writer_.run(output_file, number_of_blocks, hasher_->size());
   calculator_.run(block_size);
   writer_.join();
-  while (!exceptions_queue_.empty()) {
+  if (!exceptions_queue_.empty()) {
     auto ptr = exceptions_queue_.pop();
+    if (!exceptions_queue_.empty()) {
+      spdlog::error("multiple exceptions have occurred in the threads");
+    }
+
     std::rethrow_exception(ptr);
   }
 }
