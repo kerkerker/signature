@@ -60,10 +60,10 @@ int main(int argc, const char* argv[])
     ("help,h", "Display this information.")
     ("in_file,i", po::value<fs::path>()->required(), "Path to the input file")
     ("out_file,o", po::value<fs::path>()->required(), "Path to the output file")
-    ("block_size,b", po::value<rlim_t>()->default_value(kDefaultBlockSize)->notifier(block_size_check),
+    ("block_size,b", po::value<std::size_t>()->default_value(kDefaultBlockSize)->notifier(block_size_check),
       "Block size for hashing (>0)")
 #ifdef __linux__
-    ("memlimit,m", po::value<std::size_t>(), "Set memory limit (for linux only)")
+    ("memlimit,m", po::value<rlim_t>(), "Set memory limit (for linux only)")
 #endif
     ("log,l", po::value<std::string>()->default_value("info"), "Log level (trace, debug, info)");
   // clang-format on
