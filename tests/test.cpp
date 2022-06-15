@@ -142,8 +142,10 @@ TEST(Signature, NonExistingInputFile)
         try {
           signature_generator.run("thisfiledoesnotexist.bin", output, 64);
         } catch (std::filesystem::filesystem_error const& e) {
+#ifdef __linux__
           std::string expected{"No such file or directory"};
-//          EXPECT_TRUE(std::string{e.what()}.find(expected) != std::string::npos);
+          EXPECT_TRUE(std::string{e.what()}.find(expected) != std::string::npos);
+#endif
           throw;
         }
       },
@@ -160,7 +162,9 @@ TEST(Signature, NonExistingOutputDir)
         try {
           signature_generator.run("empty_signature.bin", output, 64);
         } catch (std::ios_base::failure const& e) {
-//          EXPECT_STREQ("basic_ios::clear: iostream error", e.what());
+#ifdef __linux__
+          EXPECT_STREQ("basic_ios::clear: iostream error", e.what());
+#endif
           throw;
         }
       },
