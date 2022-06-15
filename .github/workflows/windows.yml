@@ -28,7 +28,14 @@ jobs:
         uses: lukka/run-vcpkg@v10.2
         with:
           vcpkgGitCommitId: '14e7bb4ae24616ec54ff6b2f6ef4e8659434ea44'
-          vcpkgJsonGlob: 'vcpkg.json'
+          runVcpkgInstall: true
+
+#      - name: Install dependencies
+#        run: |
+#          vcpkg install openssl
+#          vcpkg install spdlog
+#          vcpkg install gtest
+#          vcpkg install boost-program-options boost-thread boost-asio boost-compute
 
       - name: Run CMake+vcpkg+Ninja+CTest to generate/build/
         uses: lukka/run-cmake@v10
