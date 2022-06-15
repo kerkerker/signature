@@ -85,7 +85,7 @@ int main(int argc, const char* argv[])
   set_log_level(vm["log"].as<std::string>());
 
 #ifdef __linux__
-  if (vm.contains("memlimit")) {
+  if (vm.count("memlimit") > 0) {
     rlimit rlim_memory{};
     getrlimit(RLIMIT_FSIZE, &rlim_memory);
     rlim_memory.rlim_cur = vm["memlimit"].as<rlim_t>();
