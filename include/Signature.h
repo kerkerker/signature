@@ -49,7 +49,7 @@ public:
   size_t                  size() const override;
 
 private:
-  static constexpr size_t kDigestSize{sizeof(boost::uuids::detail::sha1::digest_type)};
+  static constexpr size_t kDigestSize{20};
 };
 
 class Crc32Hasher : public IHasher
