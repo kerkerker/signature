@@ -16,8 +16,10 @@ if (with-tsan)
 endif ()
 
 
-target_compile_options(test_signature PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
-target_link_options(test_signature PUBLIC -fprofile-arcs -ftest-coverage)
+if (NOT WIN32)
+    target_compile_options(test_signature PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
+    target_link_options(test_signature PUBLIC -fprofile-arcs -ftest-coverage)
+endif ()
 
 gtest_discover_tests(test_signature
         XML_OUTPUT_DIR report)
