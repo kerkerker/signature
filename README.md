@@ -1,4 +1,4 @@
-[![CMake](https://github.com/kerkerker/signature/actions/workflows/cmake.yml/badge.svg)](https://github.com/kerkerker/signature/actions/workflows/cmake.yml)
+[![Linux](https://github.com/kerkerker/signature/actions/workflows/cmake.yml/badge.svg)](https://github.com/kerkerker/signature/actions/workflows/cmake.yml)
 [![codecov](https://codecov.io/gh/kerkerker/signature/branch/main/graph/badge.svg?token=X2F7S6JQD9)](https://codecov.io/gh/kerkerker/signature)
 
 # signature
@@ -33,5 +33,17 @@
 
 ## Решение
 
+
 ![img.png](img.png)
 
+
+```bash
+Options:
+  -h [ --help ]                      Display this information.
+  -i [ --in_file ] arg               Path to the input file
+  -o [ --out_file ] arg              Path to the output file
+  -b [ --block_size ] arg (=1000000) Block size for hashing (>0)
+```
+
+### Ограничения
+- Размер блока должен помещаться в оперативную память (не реализовано хэширование по подблокам с постепенной загрузкой в память)

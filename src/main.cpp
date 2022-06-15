@@ -71,6 +71,11 @@ int main(int argc, const char* argv[])
   po::variables_map vm;
   try {
     po::store(parse_command_line(argc, argv, opt_desc), vm);
+    if (vm.contains("help"))
+    {
+      std::cout << opt_desc << "\n";
+      return 1;
+    }
     po::notify(vm);
   } catch (boost::program_options::error const& ex) {
     spdlog::error(ex.what());

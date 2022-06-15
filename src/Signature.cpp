@@ -6,7 +6,6 @@
 #include <openssl/sha.h>
 
 #include <cstring>
-#include <iostream>
 
 static std::unique_ptr<IHasher> get_hasher(HashAlgorithm algorithm)
 {
