@@ -6,7 +6,6 @@
 #include "Reader.h"
 #include "Writer.h"
 
-#include <boost/compute/detail/sha1.hpp>
 #include <boost/crc.hpp>
 
 #include <filesystem>
